@@ -58,7 +58,7 @@ export default function About() {
             className="font-grotesk font-bold text-text-primary leading-tight mb-8"
             style={{ fontSize: "clamp(1.8rem, 3.8vw, 2.6rem)", letterSpacing: "-0.02em" }}
           >
-            Not just a student.
+            Let me introduce myself.
           </h2>
           <div className="flex flex-col gap-5">
             {BIO.split("\n\n").map((para, i) => (

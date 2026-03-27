@@ -26,7 +26,7 @@ const config: Config = {
         },
         accent:       "var(--accent)",
         "accent-inv": "var(--accent-inv)",
-        highlight:    "#C5975C",
+        highlight:    "var(--highlight)",
         border:       "var(--border-color)",
       },
     },

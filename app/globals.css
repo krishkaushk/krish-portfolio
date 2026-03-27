@@ -13,6 +13,7 @@
   --border-color:   #ddd8ce;
   --accent:         #111111;
   --accent-inv:     #f5f0e8;
+  --highlight:      #7A4A1E;
 }
 
 .dark {
@@ -25,6 +26,7 @@
   --border-color:   #2e2e2e;
   --accent:         #f0eeea;
   --accent-inv:     #141414;
+  --highlight:      #C5975C;
 }
 
 /* ─── Base ──────────────────────────────────────────────────── */
