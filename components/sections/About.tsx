@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import { PERSONAL_INFO, BIO } from "@/data/portfolio";
 
@@ -19,13 +20,15 @@ export default function About() {
 
         {/* Left — meta card */}
         <div>
-          {/* Avatar placeholder */}
-          <div className="relative w-28 h-28 rounded-sm overflow-hidden mb-10 border border-border bg-bg-secondary flex items-center justify-center select-none">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"
-              stroke="var(--border-color)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
+          {/* Profile image */}
+          <div className="relative w-28 h-28 rounded-full overflow-hidden mb-10">
+            <Image
+              src="/assets/profile.png"
+              alt="Krish Kaushik"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
 
           <div className="flex flex-col gap-3 border-t border-border pt-6">
