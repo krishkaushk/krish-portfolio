@@ -96,7 +96,7 @@ export default function Intro({ onComplete }: IntroProps) {
                 variants={charVariants}
                 style={{
                   display: "inline-block",
-                  fontSize: "clamp(3rem, 10vw, 7rem)",
+                  fontSize: "clamp(2rem, 10vw, 7rem)",
                   fontFamily: "var(--font-playfair, 'Playfair Display', serif)",
                   color: nameColor,
                   letterSpacing: "-0.01em",
