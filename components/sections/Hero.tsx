@@ -81,7 +81,7 @@ export default function Hero({ introComplete }: HeroProps) {
 
         {/* Eyebrow */}
         <motion.p {...fadeUp(0.05)} className="font-mono text-highlight text-xs tracking-[0.22em] uppercase mb-6">
-          {PERSONAL_INFO.university}&nbsp;·&nbsp;Computing Science&nbsp;·&nbsp;{PERSONAL_INFO.gradYear}
+          {PERSONAL_INFO.university}&nbsp;·&nbsp;Computing Science&nbsp;·&nbsp;{PERSONAL_INFO.minor}
         </motion.p>
 
         {/* Name */}
