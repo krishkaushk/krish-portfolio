@@ -5,6 +5,15 @@ import Image from "next/image";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import { PERSONAL_INFO, BIO } from "@/data/portfolio";
 
+function getYearOfStudy(gradYear: number): string {
+  const now = new Date();
+  const startYear = gradYear - 4;
+  const year = now.getMonth() >= 8 // September = month 8 (0-indexed)
+    ? now.getFullYear() - startYear + 1
+    : now.getFullYear() - startYear;
+  return `Year ${year}`;
+}
+
 export default function About() {
   return (
     <SectionWrapper id="about">
@@ -34,9 +43,9 @@ export default function About() {
           <div className="flex flex-col gap-3 border-t border-border pt-6">
             {[
               PERSONAL_INFO.degree,
-              `Minor - ${PERSONAL_INFO.minor}`,
+              `& ${PERSONAL_INFO.minor} minor`,
               PERSONAL_INFO.university,
-              `Class of ${PERSONAL_INFO.gradYear}`,
+              getYearOfStudy(PERSONAL_INFO.gradYear),
             ].map((item, i) => (
               <motion.span
                 key={item}
