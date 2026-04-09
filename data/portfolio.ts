@@ -60,7 +60,7 @@ export const PROJECTS: Project[] = [
     id: "eyetag",
     title: "EyeTag",
     description:
-      "An eye-tracking arcade shooter in Python using MediaPipe, iterating across ML approaches: V2, a custom ridge regression (22-feature iris landmark vectors, session-specific calibration, custom EMA smoother) and V3, a PyTorch feedforward neural network (ReLU activations, Adam optimizer, MSE loss).",
+      "An eye-tracking arcade shooter in Python using MediaPipe, iterating across ML approaches: V2, a custom ridge regression (22-feature iris landmark vectors, session-specific calibration, custom EMA smoother) and V3, a PyTorch feedforward neural network (GeLU activations, Adam optimizer, MSE loss).",
     stack: ["Python", "MediaPipe", "OpenCV", "PyTorch", "scikit-learn", "pygame"],
     githubUrl: "https://github.com/krishkaushk/EyeTag",
     accentColor: "#8C7355",
