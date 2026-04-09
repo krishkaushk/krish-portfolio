@@ -31,15 +31,16 @@ export const NAV_LINKS: NavLink[] = [
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
-    role: "IT & Marketing Developer Intern",
-    company: "HME Medical Distribution",
+    role: "Software and Automation Intern",
+    company: "HME Medical Distribution LTD.",
     location: "Vancouver, BC",
     period: "June 2025 – August 2025",
     bullets: [
-      "Built internal automation tools using JavaScript, Azure, Entra ID, and Power Automate — cutting repetitive admin work that was eating up the team's time.",
-      "Improved backend report efficiency by 30% through query optimization and process redesign.",
-      "Managed and maintained 3 company websites, handling updates, bug fixes, and content changes.",
-      "Designed and led an internally deployed phishing campaign, collecting and processing data to deliver actionable insights accross every department.",
+      "Built and debugged automated reporting pipelines and automations in JavaScript and Power Automate, integrating external REST APIs bidirectionally and using Microsoft Graph API with Entra ID authentication; deployed as Azure Functions on a schedule, saving 25+ hours of manual work per month.",
+      "Improved efficiency for 30%+ of existing monthly reporting processes.",
+      "Designed and led an internal phishing awareness campaign across 130+ employees using Microsoft Entra ID to manage and target accounts; configured, deployed, and analyzed data to present actionable recommendations.",
+      "Managed version control and documentation for internal projects using Git.",
+      "Updated and maintained 3 company websites via WordPress to support product lines and a company rebrand.",
     ],
   },
 ];
@@ -73,6 +74,24 @@ export const PROJECTS: Project[] = [
     stack: ["Java", "IDA*", "Kociemba's Algorithm"],
     githubUrl: "https://github.com/simonn810/CMPT-225-Rubiks-Cube-Project-",
     accentColor: "#A0845C",
+  },
+  {
+    id: "eyetag",
+    title: "EyeTag",
+    description:
+      "An eye-tracking arcade shooter where your gaze is the crosshair. Calibrates to your eyes in ~25 seconds, then uses a Ridge regression model on MediaPipe facial landmarks to predict gaze and auto-fire at enemies in real time.",
+    stack: ["Python", "MediaPipe", "OpenCV", "scikit-learn", "pygame", "NumPy"],
+    githubUrl: "https://github.com/krishkaushk/EyeTag",
+    accentColor: "#8C7355",
+  },
+  {
+    id: "lockalarm",
+    title: "LockAlarm",
+    description:
+      "Webcam-based focus monitor that detects when you look away and blasts an alarm to keep you accountable. Tracks face absence, head position, and eye closure across three priority levels with real-time metrics and blink filtering.",
+    stack: ["Python", "MediaPipe", "OpenCV"],
+    githubUrl: "https://github.com/krishkaushk/LockAlarm",
+    accentColor: "#7A6548",
   },
   {
     id: "portfolio",
