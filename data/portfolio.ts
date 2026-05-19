@@ -31,10 +31,10 @@ export const NAV_LINKS: NavLink[] = [
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
-    role: "Software and Automation Intern",
+    role: "Information Technology and Marketing Intern",
     company: "HME Medical Distribution LTD.",
     location: "Vancouver, BC",
-    period: "June 2025 – August 2025",
+    period: "June 2025 – August 2025" + "\n" + "May 2026 – Current",
     bullets: [
       "Built and debugged automated reporting pipelines and automations in JavaScript and Power Automate, integrating external REST APIs bidirectionally and using Microsoft Graph API with Entra ID authentication; deployed as Azure Functions on a schedule, saving 25+ hours of manual work per month.",
       "Improved efficiency for 30%+ of existing monthly reporting processes.",
