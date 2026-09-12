@@ -8,6 +8,7 @@ import type { Project } from "@/types";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { GithubIcon, ExternalIcon, CloseIcon } from "@/components/ui/icons";
+import { hexToRgba } from "@/lib/colour";
 
 interface ProjectDetailScreenProps {
   project: Project;
@@ -95,25 +96,77 @@ export default function ProjectDetailScreen({ project, onClose }: ProjectDetailS
                 style={{ width: 4, height: 4, top: 4, left: "50%", marginLeft: -2, background: "rgba(255,255,255,0.55)" }}
               />
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="rounded-full" style={{ width: 14, height: 14, background: project.accentColor }} />
+                <div
+                  className="relative rounded-full overflow-hidden"
+                  style={{
+                    width: 14,
+                    height: 14,
+                    background: project.coverImage ? undefined : hexToRgba(project.accentColor, 0.5),
+                    backdropFilter: project.coverImage ? undefined : "blur(4px) saturate(160%)",
+                    WebkitBackdropFilter: project.coverImage ? undefined : "blur(4px) saturate(160%)",
+                  }}
+                >
+                  {project.coverImage && (
+                    <Image src={project.coverImage} alt="" fill sizes="14px" className="object-cover" />
+                  )}
+                </div>
               </div>
             </motion.div>
           </MotionConfig>
         </div>
 
         <div className="max-w-2xl mx-auto px-6 pb-10 pt-8">
-        {/* Cover banner */}
+        {/* Cover banner — priority is coverVideo > bannerImage > coverImage.
+            No fixed height/crop: media sizes naturally at full width so nothing is cut off. */}
         <div
-          className="relative w-full h-48 md:h-64 rounded-md overflow-hidden border border-border mb-8"
-          style={{ background: project.coverImage ? undefined : project.accentColor }}
+          className={`relative w-full rounded-md overflow-hidden border border-border mb-8 ${
+            project.coverVideo || project.bannerImage || project.coverImage ? "" : "h-48 md:h-64"
+          }`}
+          style={
+            project.coverVideo || project.bannerImage || project.coverImage
+              ? undefined
+              : {
+                  background: hexToRgba(project.accentColor, 0.45),
+                  backdropFilter: "blur(14px) saturate(160%)",
+                  WebkitBackdropFilter: "blur(14px) saturate(160%)",
+                }
+          }
         >
-          {project.coverImage && (
-            <Image
-              src={project.coverImage}
-              alt={project.coverAlt ?? `${project.title} cover art`}
-              fill
-              className="object-cover"
+          {!project.coverVideo && !project.bannerImage && !project.coverImage && (
+            <div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)" }}
             />
+          )}
+          {project.coverVideo ? (
+            <video
+              src={project.coverVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="block w-full h-auto pointer-events-none"
+            />
+          ) : project.bannerImage ? (
+            <Image
+              src={project.bannerImage}
+              alt={project.bannerAlt ?? `${project.title} screenshot`}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="block w-full h-auto"
+            />
+          ) : (
+            project.coverImage && (
+              <Image
+                src={project.coverImage}
+                alt={project.coverAlt ?? `${project.title} cover art`}
+                width={0}
+                height={0}
+                sizes="100vw"
+                className="block w-full h-auto"
+              />
+            )
           )}
         </div>
 
@@ -202,16 +255,45 @@ export default function ProjectDetailScreen({ project, onClose }: ProjectDetailS
                   </div>
                 );
               }
-              return (
-                <div key={i}>
-                  <div className="relative w-full h-64 rounded-sm overflow-hidden border border-border">
-                    <Image src={block.src} alt={block.alt} fill className="object-cover" />
+              if (block.type === "video") {
+                return (
+                  <div key={i}>
+                    <div className="relative w-full rounded-sm overflow-hidden border border-border">
+                      <video
+                        src={block.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="block w-full h-auto pointer-events-none"
+                      />
+                    </div>
+                    {block.caption && (
+                      <p className="font-mono text-xs text-text-secondary mt-2">{block.caption}</p>
+                    )}
                   </div>
-                  {block.caption && (
-                    <p className="font-mono text-xs text-text-secondary mt-2">{block.caption}</p>
-                  )}
-                </div>
-              );
+                );
+              }
+              if (block.type === "image") {
+                return (
+                  <div key={i}>
+                    <div className="relative w-full rounded-sm overflow-hidden border border-border">
+                      <Image
+                        src={block.src}
+                        alt={block.alt}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="block w-full h-auto"
+                      />
+                    </div>
+                    {block.caption && (
+                      <p className="font-mono text-xs text-text-secondary mt-2">{block.caption}</p>
+                    )}
+                  </div>
+                );
+              }
+              return null;
             })}
           </div>
         )}

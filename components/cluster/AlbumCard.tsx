@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import type { Project } from "@/types";
+import { hexToRgba } from "@/lib/colour";
 
 interface AlbumCardProps {
   project: Project;
@@ -64,10 +65,30 @@ export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div
-            className="rounded-full flex items-center justify-center"
-            style={{ width: RECORD * 0.36, height: RECORD * 0.36, background: project.accentColor }}
+            className="relative rounded-full overflow-hidden flex items-center justify-center"
+            style={{
+              width: RECORD * 0.36,
+              height: RECORD * 0.36,
+              background: project.coverImage ? undefined : hexToRgba(project.accentColor, 0.5),
+              backdropFilter: project.coverImage ? undefined : "blur(6px) saturate(160%)",
+              WebkitBackdropFilter: project.coverImage ? undefined : "blur(6px) saturate(160%)",
+            }}
           >
-            <div className="rounded-full bg-bg-primary" style={{ width: 6, height: 6 }} />
+            {project.coverImage ? (
+              <Image
+                src={project.coverImage}
+                alt=""
+                fill
+                sizes={`${Math.round(RECORD * 0.36)}px`}
+                className="object-cover"
+              />
+            ) : (
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)" }}
+              />
+            )}
+            <div className="relative rounded-full bg-bg-primary" style={{ width: 6, height: 6 }} />
           </div>
         </div>
       </motion.div>
@@ -92,15 +113,31 @@ export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
         }}
         transition={{ type: "spring", stiffness: 300, damping: 24 }}
       >
-        <div className="absolute inset-0" style={{ background: project.accentColor }} />
-        {project.coverImage && (
-          <Image
-            src={project.coverImage}
-            alt={project.coverAlt ?? `${project.title} cover art`}
-            fill
-            sizes={`${SLEEVE}px`}
-            className="object-cover"
-          />
+        {project.coverImage ? (
+          <>
+            <div className="absolute inset-0" style={{ background: project.accentColor }} />
+            <Image
+              src={project.coverImage}
+              alt={project.coverAlt ?? `${project.title} cover art`}
+              fill
+              sizes={`${SLEEVE}px`}
+              className="object-cover"
+            />
+          </>
+        ) : (
+          <div
+            className="absolute inset-0"
+            style={{
+              background: hexToRgba(project.accentColor, 0.45),
+              backdropFilter: "blur(14px) saturate(160%)",
+              WebkitBackdropFilter: "blur(14px) saturate(160%)",
+            }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 60%)" }}
+            />
+          </div>
         )}
         <div
           className="absolute inset-x-0 top-0 h-14 pointer-events-none"

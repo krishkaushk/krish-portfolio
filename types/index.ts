@@ -16,6 +16,12 @@ export interface Project {
   coverImage?: string;
   /** Alt text for coverImage; falls back to `${title} cover art` when omitted. */
   coverAlt?: string;
+  /** Optional video for the detail screen's banner — takes priority over coverImage there when set (the sleeve card still always uses coverImage). Plays muted, looping, no controls. */
+  coverVideo?: string;
+  /** Optional still image for the detail screen's banner, when it should differ from coverImage (e.g. coverImage is a logo used on the sleeve, bannerImage is a real screenshot shown when opened). Priority: coverVideo > bannerImage > coverImage. */
+  bannerImage?: string;
+  /** Alt text for bannerImage; falls back to `${title} screenshot` when omitted. */
+  bannerAlt?: string;
   /** Set true to keep the project in data but leave it out of the visible project display. */
   hidden?: boolean;
 }
@@ -36,7 +42,8 @@ export interface ProjectStory {
 export type StoryBlock =
   | { type: "text"; heading?: string; body: string }
   | { type: "callout"; label: string; body: string }
-  | { type: "image"; src: string; alt: string; caption?: string };
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | { type: "video"; src: string; caption?: string };
 
 export interface ExperienceItem {
   role: string;

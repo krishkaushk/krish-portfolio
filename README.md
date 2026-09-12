@@ -8,7 +8,7 @@ Personal portfolio website live at [krishkaushik.vercel.app](https://krishkaushi
 - **TypeScript**
 - **Tailwind CSS**
 - **Framer Motion** — animations
-- **next-themes** — dark/light mode
+- **next-themes** — light mode
 - **Vercel** — deployment
 
 
