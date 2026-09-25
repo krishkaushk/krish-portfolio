@@ -184,6 +184,68 @@ export const PROJECTS: Project[] = [
     },
   },
   {
+    id: "meowminos-delivery",
+    title: "Meowmino's Delivery",
+    description:
+      "A top-down 2D pizza delivery game built in Java with LibGDX for a 5-person team project — deliver the pizza to the president before the time runs out while dodging police and puddles.",
+    stack: ["Java", "LibGDX", "Maven", "LaTeX"],
+    githubUrl: "https://github.sfu.ca/jminns/Spring2026Team15",
+    demoUrl: "https://www.youtube.com/watch?v=gFfb3DsHz78",
+    accentColor: "#E0A526",
+    spotlight: true,
+    images: [],
+    coverImage: "/assets/projects/meowminos-delivery/character.png",
+    coverAlt: "Meowmino's Delivery courier cat sprite carrying a pizza",
+    coverVideo: "/assets/projects/meowminos-delivery/gameplay.mp4",
+    story: {
+      subtitle: "A 2D Java pizza delivery game —  deliver the pizza to the President before the timer runs out! Watch out for cops and puddles in your way!",
+      role: "Team project (5): game mechanics + characters/assets",
+      timeline: "Java + LibGDX, Maven build, Spring 2026",
+      blocks: [
+        {
+          type: "callout",
+          label: "Watch the trailer",
+          body: "",
+          href: "https://www.youtube.com/watch?v=gFfb3DsHz78",
+          linkLabel: "YouTube",
+        },
+        {
+          type: "text",
+          body:
+            "Meowmino's Delivery is a top-down 2D game where you play a delivery cat weaving through a neighborhood on a scooter, racing a countdown timer and working through levels delivering pizza to different houses. Police enemies patrol the map and give chase once they spot you, puddles slow you down if you hit them, and fish scattered around the streets are a resource you collect and can lose if you get caught.\n\n" +
+            "I built it in Java on LibGDX with a five-person team for an intro software engineering course at SFU, using Maven for the build and LaTeX for our design documentation.",
+        },
+        {
+          type: "video",
+          src: "/assets/projects/meowminos-delivery/menu.mp4",
+          caption: "The title screen.",
+        },
+        {
+          type: "text",
+          heading: "What I worked on",
+          body:
+            "Our team split into three areas: design/animation, characters/assets, and game mechanics. I worked mainly on game mechanics and character movement and interaction. The delivery systems alongside player and enemy interactions were my main focus.\n\n" +
+            "Deliveries work through an observer relationship: each house tracks its own order state, and a DeliveryNotification listens for changes so the prompt over a house updates the moment it's ready to be delivered to.\n\n" + 
+            "Police enemies run their own state machine (NONE, ALERTED, CHASING) so they only give chase once they've actually noticed you. They also cause respawn on catch and subract time and points (fish).\n\n" + 
+            "Puddle enemies behave as an entirely separate enemy type that slows you down and loses you points rather than making you respawn.",
+        },
+        {
+          type: "text",
+          heading: "Challenges",
+          body:
+            "On my end, the delivery system gave me the most trouble: getting collision, house detection, and the notification state to all agree with each other, on top of a map built from hand-drawn assets took a lot of iteration.\n\n" +
+            "On top of that, coordinating a five-person codebase while also juggling midterms and coursework meant workload balancing was as much a challenge as any of the code.",
+        },
+        {
+          type: "callout",
+          label: "Recognition",
+          body:
+            "Out of the class, Meowmino's Delivery placed 2nd Best Game and 1st Best Presentation.",
+        },
+      ],
+    },
+  },
+  {
     id: "portfolio",
     title: "My Website",
     description:
@@ -214,6 +276,7 @@ export const PROJECTS: Project[] = [
     stack: ["Java", "IDA*", "Kociemba's Algorithm"],
     githubUrl: "https://github.com/simonn810/CMPT-225-Rubiks-Cube-Project-",
     accentColor: "#e2bbf9",
+    hidden: true,
   },
   {
     id: "lockalarm",

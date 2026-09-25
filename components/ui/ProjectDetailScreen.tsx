@@ -15,6 +15,17 @@ interface ProjectDetailScreenProps {
   onClose: () => void;
 }
 
+function demoLinkLabel(url: string): string {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "");
+    if (host === "devpost.com") return "Devpost";
+    if (host === "youtube.com" || host === "youtu.be") return "YouTube";
+    return "Demo";
+  } catch {
+    return "Demo";
+  }
+}
+
 // Scrollable detail panel for every project (spotlight or not) — a centered
 // card over a backdrop, not a full-page takeover. A vinyl disc spins
 // continuously in its sticky header for the life of the panel; it's wrapped
@@ -252,6 +263,17 @@ export default function ProjectDetailScreen({ project, onClose }: ProjectDetailS
                     <p className="font-inter text-text-secondary text-sm leading-relaxed whitespace-pre-line">
                       {block.body}
                     </p>
+                    {block.href && (
+                      <a
+                        href={block.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs mt-3 hover:underline"
+                        style={{ color: project.accentColor }}
+                      >
+                        <ExternalIcon /> {block.linkLabel ?? "Learn more"}
+                      </a>
+                    )}
                   </div>
                 );
               }
@@ -316,7 +338,7 @@ export default function ProjectDetailScreen({ project, onClose }: ProjectDetailS
               className="inline-flex items-center gap-1.5 font-mono text-xs text-text-secondary hover:text-text-primary transition-colors duration-200 border border-border hover:border-text-secondary px-3 py-1.5 rounded-sm"
               style={{ background: "var(--bg-secondary)" }}
             >
-              <ExternalIcon /> Devpost
+              <ExternalIcon /> {demoLinkLabel(project.demoUrl)}
             </a>
           )}
         </div>

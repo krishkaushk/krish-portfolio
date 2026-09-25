@@ -41,7 +41,7 @@ export interface ProjectStory {
 
 export type StoryBlock =
   | { type: "text"; heading?: string; body: string }
-  | { type: "callout"; label: string; body: string }
+  | { type: "callout"; label: string; body: string; href?: string; linkLabel?: string }
   | { type: "image"; src: string; alt: string; caption?: string }
   | { type: "video"; src: string; caption?: string };
 
