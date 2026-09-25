@@ -1,31 +1,23 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Intro from "@/components/Intro";
 import { IntroCompleteProvider } from "@/components/IntroContext";
 
-const SESSION_KEY = "hasSeenIntro";
-
+// IntroGate lives in the root layout, so it only mounts once per real page
+// load/reload — it does not remount on in-app navigation between routes.
+// That means playing the intro unconditionally on every mount already gives
+// "every reload replays it, in-app navigation doesn't" for free.
 export default function IntroGate({ children }: { children: React.ReactNode }) {
-  // Start true so nothing on the page waits during SSR/first paint; flip to
-  // false immediately on mount if this session hasn't seen the intro yet.
-  const [introComplete, setIntroComplete] = useState(true);
-  const [showIntro, setShowIntro] = useState(false);
-
-  useEffect(() => {
-    if (sessionStorage.getItem(SESSION_KEY)) return;
-    setIntroComplete(false);
-    setShowIntro(true);
-  }, []);
+  const [introComplete, setIntroComplete] = useState(false);
 
   const handleIntroComplete = useCallback(() => {
-    sessionStorage.setItem(SESSION_KEY, "1");
     setIntroComplete(true);
   }, []);
 
   return (
     <IntroCompleteProvider value={introComplete}>
-      {showIntro && <Intro onComplete={handleIntroComplete} />}
+      <Intro onComplete={handleIntroComplete} />
       {children}
     </IntroCompleteProvider>
   );

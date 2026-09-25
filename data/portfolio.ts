@@ -29,16 +29,26 @@ export const NAV_LINKS: NavLink[] = [
 
 export const EXPERIENCE: ExperienceItem[] = [
   {
+    role: "Web Development and Systems Intern (Part-Time)",
+    company: "HME Medical Distribution LTD.",
+    location: "Vancouver, BC",
+    period: "September 2026 – Present",
+    bullets: [
+      "Spearheading a full website redesign, modernizing pages and working with design and external vendors as needed.",
+      "Leading deployment of macOS systems company-wide to 130+ employees.",
+    ],
+  },
+  {
     role: "Information Technology and Marketing Intern",
     company: "HME Medical Distribution LTD.",
     location: "Vancouver, BC",
-    period: "June 2025 – August 2025" + "\n" + "May 2026 – Current",
+    period: "June 2025 – August 2025" + "\n" + "May 2026 – August 2026",
     bullets: [
-      "Built and debugged automated reporting pipelines and automations in JavaScript and Power Automate, integrating external REST APIs bidirectionally and using Microsoft Graph API with Entra ID authentication; deployed as Azure Functions on a schedule, saving 25+ hours of manual work per month.",
-      "Improved efficiency for 30%+ of existing monthly reporting processes.",
-      "Designed and led an internal phishing awareness campaign across 130+ employees using Microsoft Entra ID to manage and target accounts; configured, deployed, and analyzed data to present actionable recommendations.",
-      "Managed version control and documentation for internal projects using Git.",
-      "Updated and maintained 3 company websites via WordPress to support product lines and a company rebrand.",
+      "Built and deployed reporting pipelines using JavaScript and Power Automate, deployed with Azure Functions.",
+      "Maintained and updated 2 company websites, supporting new products and a company rebrand.",
+      "Built a production repo of 65+ custom Node.js functions connected to our CRM System; developed an internal debugging and training web page, mapping the custom functions and 170+ workflow dependencies.",
+      "Configured an internal AI copilot agent for search across 500+ technical service documents.",
+      "Designed and led an internal phishing awareness campaign targeting 130+ employees; configured, deployed, and analyzed data to present actionable recommendations.",
     ],
   },
 ];
