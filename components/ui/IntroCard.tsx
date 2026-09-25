@@ -55,8 +55,8 @@ export default function IntroCard() {
             src="/assets/profile.png"
             alt="Krish Kaushik"
             rotate={-3}
-            className="w-28 md:w-36 mx-auto md:mx-0"
-            sizes="(max-width: 768px) 112px, 144px"
+            className="w-44 md:w-36 mx-auto md:mx-0"
+            sizes="(max-width: 768px) 176px, 144px"
             priority
           />
 

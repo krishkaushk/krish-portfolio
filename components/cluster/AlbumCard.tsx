@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import type { Project } from "@/types";
 import { hexToRgba } from "@/lib/colour";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface AlbumCardProps {
   project: Project;
@@ -15,6 +16,13 @@ interface AlbumCardProps {
 const SLEEVE = 156;
 const RECORD = 138;
 const HOVER_PEEK = 56;
+
+// Smaller fixed sizing for the 2-column mobile grid, keeping the same
+// proportions as the desktop sleeve/record/peek so it still reads as the
+// same card, just scaled down to fit two per row.
+const SLEEVE_MOBILE = 112;
+const RECORD_MOBILE = 99;
+const HOVER_PEEK_MOBILE = 32;
 
 // A record sleeve that leans at a fixed tilt. Behind it, a vinyl disc rests
 // mostly hidden — spotlight projects rest with the disc already peeking out
@@ -31,23 +39,27 @@ const HOVER_PEEK = 56;
 // opening no longer requires it.
 export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
   const [hovered, setHovered] = useState(false);
+  const isMobile = useIsMobile();
+  const sleeve = isMobile ? SLEEVE_MOBILE : SLEEVE;
+  const record = isMobile ? RECORD_MOBILE : RECORD;
+  const hoverPeek = isMobile ? HOVER_PEEK_MOBILE : HOVER_PEEK;
   const restRotate = [-4, 3, -2, 4, -3][index % 5];
-  const restPeek = project.spotlight ? 20 : 5;
-  const peek = hovered ? HOVER_PEEK : restPeek;
-  const recordLeft = SLEEVE - RECORD + peek;
-  const recordTop = (SLEEVE - RECORD) / 2;
+  const restPeek = (project.spotlight ? 20 : 5) * (sleeve / SLEEVE);
+  const peek = hovered ? hoverPeek : restPeek;
+  const recordLeft = sleeve - record + peek;
+  const recordTop = (sleeve - record) / 2;
 
   return (
     <div
       className="relative shrink-0"
-      style={{ width: SLEEVE + HOVER_PEEK + 6, height: SLEEVE }}
+      style={{ width: sleeve + hoverPeek + 6, height: sleeve }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Vinyl disc — behind the sleeve, slides out to the right */}
       <motion.div
         className="absolute rounded-full"
-        style={{ width: RECORD, height: RECORD, top: recordTop, background: "#211f1c" }}
+        style={{ width: record, height: record, top: recordTop, background: "#211f1c" }}
         animate={{ left: recordLeft, rotate: hovered ? -18 : 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 24 }}
       >
@@ -67,8 +79,8 @@ export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
           <div
             className="relative rounded-full overflow-hidden flex items-center justify-center"
             style={{
-              width: RECORD * 0.36,
-              height: RECORD * 0.36,
+              width: record * 0.36,
+              height: record * 0.36,
               background: project.coverImage ? undefined : hexToRgba(project.accentColor, 0.5),
               backdropFilter: project.coverImage ? undefined : "blur(6px) saturate(160%)",
               WebkitBackdropFilter: project.coverImage ? undefined : "blur(6px) saturate(160%)",
@@ -79,7 +91,7 @@ export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
                 src={project.coverImage}
                 alt=""
                 fill
-                sizes={`${Math.round(RECORD * 0.36)}px`}
+                sizes={`${Math.round(record * 0.36)}px`}
                 className="object-cover"
               />
             ) : (
@@ -106,7 +118,7 @@ export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
           }
         }}
         className="absolute left-0 top-0 rounded-sm border border-border overflow-hidden cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-accent"
-        style={{ width: SLEEVE, height: SLEEVE, rotate: restRotate }}
+        style={{ width: sleeve, height: sleeve, rotate: restRotate }}
         animate={{
           scale: hovered ? 1.03 : 1,
           boxShadow: hovered ? "0 18px 32px rgba(0,0,0,0.22)" : "0 6px 14px rgba(0,0,0,0.12)",
@@ -120,7 +132,7 @@ export default function AlbumCard({ project, index, onOpen }: AlbumCardProps) {
               src={project.coverImage}
               alt={project.coverAlt ?? `${project.title} cover art`}
               fill
-              sizes={`${SLEEVE}px`}
+              sizes={`${sleeve}px`}
               className="object-cover"
             />
           </>
