@@ -255,18 +255,90 @@ export const PROJECTS: Project[] = [
     accentColor: "#85c4dc",
   },
   {
-    id: "pitchpal",
-    title: "PitchPal",
+    id: "scrubs",
+    title: "Scrubs",
     description:
-      "Generates pitch slide decks and gives you a place to actually practice them — real-time listening, scoring, feedback, and narration powered by Gemini and ElevenLabs.",
-    stack: ["React", "TypeScript", "Gemini API", "ElevenLabs API", "HTML", "CSS"],
-    githubUrl: "https://github.com/StormHacks2025/pitchpal1",
-    demoUrl: "https://devpost.com/software/pitchpal-t5opzn",
-    accentColor: "#4C6B8A",
-    coverImage: "/assets/projects/pitchpal/logo.png",
-    coverAlt: "PitchPal logo",
-    bannerImage: "/assets/projects/pitchpal/landing.png",
-    bannerAlt: "PitchPal landing page",
+      "A desktop app that masks patient identifiers in clinical notes on your own machine, so clinicians can use Gemini for letters and summaries without it learning who the patient is. Built at StormHacks 2026, where I led the backend and the detection pipeline (Presidio, GLiNER, and a TiDB database of known place names and job titles).",
+    stack: ["Python", "Flask", "Presidio", "GLiNER", "TiDB", "Gemini API"],
+    githubUrl: "https://github.com/nathan-omana/Scrubs",
+    demoUrl: "https://devpost.com/software/scrubs-v2juzi",
+    accentColor: "#0B2F4E",
+    spotlight: true,
+    images: [],
+    coverImage: "/assets/projects/scrubs/logo.png",
+    coverAlt: "Scrubs logo",
+    bannerImage: "/assets/projects/scrubs/banner.png",
+    bannerAlt: "Scrubs title banner",
+    story: {
+      subtitle: "A desktop app that lets clinicians use LLMs like Gemini on patient notes without exposing identifying patient data. Names, health numbers, and other identifiers are masked on their own computer, so the AI only ever sees placeholders.",
+      role: "Team project (4): backend + detection pipeline lead",
+      timeline: "Python + Flask backend, Next.js frontend, StormHacks 2026",
+      blocks: [
+        {
+          type: "callout",
+          label: "Watch the demo",
+          body: "",
+          href: "https://www.youtube.com/watch?v=ypOCebMyAds",
+          linkLabel: "YouTube",
+        },
+        {
+          type: "text",
+          body:
+            "Clinicians are already pasting patient notes into chatbots to draft referral letters and discharge summaries. Those notes are full of names, health numbers, and other details that identify the patient, and sending them to a third-party AI breaches both the patient's privacy and the privacy laws clinics are bound by. Patients never agreed to have their health details stored by an AI company, and that data can leak: in January 2025, researchers found a DeepSeek database left open on the internet, exposing over a million records that included users' chat histories.\n\n" +
+            "Scrubs lets clinicians keep using AI without that risk. You upload a PDF or paste a note, and Scrubs flags the identifiers on your own computer. The ones you mask get swapped for placeholders like [PATIENT_01] before anything is sent to Gemini, and when the answer comes back, the real names are put back in on your screen.",
+        },
+        {
+          type: "image",
+          src: "/assets/projects/scrubs/pipeline.png",
+          alt: "Scrubs pipeline: the note is parsed and scanned by Presidio, GLiNER and TiDB on the clinic's machine, then merged and pseudonymized before only placeholders go to Gemini",
+          caption: "Everything inside the dashed line runs on the clinician's computer. Gemini only sees placeholders.",
+        },
+        {
+          type: "text",
+          heading: "Finding the identifiers",
+          body:
+            "Names and health numbers are the easy part. The harder ones are details like \"the retired town pharmacist\", which no standard PII tool has a category for. So every note goes through three detectors.\n\n" +
+            "Microsoft Presidio handles the standard patterns, and I added BC-specific recognizers on top: Personal Health Numbers with their check digit, Canadian postal codes, MRNs, and prescriber license numbers. GLiNER, a small zero-shot model running locally, labels indirect identifiers like roles and family details. Since it only labels phrases and isn't a chatbot, text inside a note can't instruct it. Finally, a TiDB database of known place names, facilities, and identifying job titles catches the rest. Entries that are also common words, like Hope or Nelson, only count when GLiNER flags the same spot.",
+        },
+        {
+          type: "image",
+          src: "/assets/projects/scrubs/review.png",
+          alt: "Scrubs review screen with flagged identifiers sorted into HIGH, MED, and LOW tiers",
+          caption: "Reviewing flags: HIGH items are locked, MED are masked by default, LOW are kept.",
+        },
+        {
+          type: "text",
+          heading: "What I worked on",
+          body:
+            "I led the backend. That meant the Flask API, merging the three detectors into one set of flags, the severity tiers and placeholders, and date shifting, where every date for a patient moves by the same random offset so the gaps between them stay right for the clinician.\n\n" +
+            "HIGH items like names and health numbers can't be unmasked, and a leak check blocks any outbound request that still contains a masked value. Documents are only ever kept in memory. I also wrote around 160 Python tests, including a privacy suite that blocks network access, watches disk writes, and inspects the exact request sent to Gemini to prove no identifiers leak.",
+        },
+        {
+          type: "image",
+          src: "/assets/projects/scrubs/split-view.png",
+          alt: "Scrubs split view showing a referral letter with real names next to the placeholder version Gemini received",
+          caption: "Split view: what you see on the left, what the chatbot saw on the right.",
+        },
+        {
+          type: "callout",
+          label: "Results",
+          body:
+            "On 20 held-out synthetic notes, compared with default Presidio, identifiers leaked dropped from 24 to 8 and indirect identifiers caught rose from 73% to 98%. Clinical terms wrongly removed fell from 28% to 3%, so the medicine stays in the note where the chatbot needs it.",
+        },
+        {
+          type: "text",
+          heading: "Working as a team",
+          body:
+            "With 90 minutes of sleep and probably like 900mg of caffeine, we ran the weekend like a small engineering team. We each took ownership of different parts of the build and worked on our own branch. Everything reached main through pull requests, and I reviewed and merged anything touching the backend. The rule was that main always had to be demo-able, so we merged small changes often and set checkpoints through the night.\n\n" +
+            "Detection runs on the clinician's own computer, so my teammates packaged Scrubs as a Windows installer. The only thing that goes over the internet is the masked text sent to the chat.",
+        },
+        {
+          type: "video",
+          src: "/assets/projects/scrubs/installer.mp4",
+          caption: "Installing Scrubs with the setup wizard.",
+        },
+      ],
+    },
   },
   {
     id: "rubiks-cube",
