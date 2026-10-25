@@ -1,6 +1,6 @@
 # Krish Zhao Kaushik — Portfolio
 
-Personal portfolio website live at [krishkaushik.vercel.app](https://krishkaushik.vercel.app). Designed my me.
+Personal portfolio website live at [krishkaushik.vercel.app](https://krishkaushik.vercel.app). Designed by me.
 
 ## Tech Stack
 
