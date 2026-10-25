@@ -140,24 +140,24 @@ export const PROJECTS: Project[] = [
         },
         {
           type: "text",
-          heading: "Turning eye tracking into a regression problem",
+          heading: "Eye-tracking model",
           body:
-            "This is supervised regression, not a pretrained gaze model. During calibration I stare at 9 known points on screen, and every frame becomes a labeled training sample: 22 eye features mapped to (screen_x, screen_y). " +
+            "During calibration I stare at 9 known points on screen, and every frame becomes a labeled training sample: 22 eye features mapped to (screen_x, screen_y). " +
             "After roughly 500 samples, a Ridge regression fits a linear map from eye space to screen space. Inference afterward is just a single matrix multiply, fast enough to run every frame.",
         },
         {
           type: "callout",
-          label: "My thought process behind ridge regression",
+          label: "Ridge regression",
           body:
-            "I normalized iris position by eye corner coordinates instead of using raw iris coordinates, which makes it partially invariant to head movement (large movements still drift predictions, but small ones are fine).\n\n" +
+            "I normalized iris position by eye corner coordinates, which makes it partially invariant to head movement (large movements still drift predictions, but small ones are fine).\n\n" +
             "I also added Ridge regularization at α=0.2, since 500 samples and 22 features is small enough that plain linear regression would overfit. Ridge keeps it stable.\n\n" +
-            "Finally, I discard blink frames: EAR under 0.21 flags a blink, and I drop those frames from training to keep labels clean.",
+            "I also try to discard blink frames: EAR under 0.21 flags a blink, and I drop those frames from training.",
         },
         {
           type: "text",
           heading: "Calibration",
           body:
-            "Calibration shows 9 dots in a 3×3 grid, top-left to bottom-right. I stare at each for about 2 seconds while the progress ring fills, and blinks are ignored. The model trains once it's done, around 25 seconds total.\n\n" +
+            "Calibration shows 9 dots in a 3×3 grid, top-left to bottom-right. I stare at each for about 2 seconds while the progress ring fills. The model trains once it's done, around 25 seconds total.\n\n" +
             "Keeping my head still, looking at the center of each dot rather than around it, and having even lighting all made a real difference in tracking quality.",
         },
         {
@@ -174,7 +174,7 @@ export const PROJECTS: Project[] = [
         },
         {
           type: "callout",
-          label: "The V3 branch: Neural Network",
+          label: "V3: Neural Network",
           body:
             "In a separate branch, I swapped the Ridge regression for GazeNet, a 5-layer feedforward network (22 → 256 → 256 → 128 → 64 → 32 → 2) with GELU activations instead of ReLU, trained with Adam and MSE loss over 1500 epochs against a denser 5×5 calibration grid (25 points instead of 9).\n\n" +
             "I chose GELU deliberately over ReLU. ReLU networks are piecewise-linear, so predicted gaze position moves in straight segments between breakpoints, while GELU is smooth and continuously differentiable, so the cursor flows rather than snapping. It's the same reasoning GPT and BERT use GELU for.\n\n" +
